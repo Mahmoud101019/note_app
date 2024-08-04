@@ -4,11 +4,13 @@ class CardNote extends StatelessWidget {
   final void Function()? onTap;
   final String title;
   final String content;
+  final void Function()? onDelete;
   const CardNote({
     super.key,
     required this.onTap,
     required this.title,
     required this.content,
+    required this.onDelete,
   });
 
   @override
@@ -33,6 +35,13 @@ class CardNote extends StatelessWidget {
               child: ListTile(
                 title: Text(title),
                 subtitle: Text(content),
+                trailing: IconButton(
+                  onPressed: onDelete,
+                  icon: const Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                  ),
+                ),
               ),
             ),
           ],

@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_null_comparison, avoid_print
+// ignore_for_file: unnecessary_null_comparison, avoid_print, unused_local_variable
 
 import 'package:flutter/material.dart';
 import 'package:noteapp/app/notes/edit_notes.dart';
@@ -26,6 +26,16 @@ class _HomeScreenState extends State<HomeScreen> {
     );
     print("data is $respone");
     return respone;
+  }
+
+  deleteNote(String notes_id) async {
+    var response = await crud.postRequest(
+      linkDeleteNote,
+      {"notes_id": notes_id},
+    );
+    if (response['status'] == "Success") {
+      Navigator.of(context).pushNamedAndRemoveUntil("Home", (route) => false);
+    }
   }
 
   @override
@@ -77,6 +87,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, i) {
                         return CardNote(
+                          onDelete: () async {
+                            deleteNote(snapshot.data['data'][i]['notes_id']
+                                .toString());
+                          },
                           onTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
