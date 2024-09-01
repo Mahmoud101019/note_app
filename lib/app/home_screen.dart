@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_null_comparison, avoid_print, unused_local_variable
+// ignore_for_file: unnecessary_null_comparison, avoid_print, unused_local_variable, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:noteapp/app/notes/edit_notes.dart';
@@ -6,6 +6,7 @@ import 'package:noteapp/components/cardnote.dart';
 import 'package:noteapp/components/crud.dart';
 import 'package:noteapp/constant/linkapi.dart';
 import 'package:noteapp/main.dart';
+import 'package:noteapp/models/notes_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -28,10 +29,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return respone;
   }
 
-  deleteNote(String notes_id) async {
+  deleteNote(String notesId) async {
     var response = await crud.postRequest(
       linkDeleteNote,
-      {"notes_id": notes_id},
+      {"notes_id": notesId},
     );
     if (response['status'] == "Success") {
       Navigator.of(context).pushNamedAndRemoveUntil("Home", (route) => false);
@@ -43,7 +44,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.blue,
           title: const Text("Home"),
+          centerTitle: true,
           actions: [
             IconButton(
               onPressed: () {
@@ -56,6 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.blue,
           onPressed: () {
             Navigator.of(context).pushNamed("Addnotes");
           },
@@ -100,9 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             );
                           },
-                          title: "${snapshot.data['data'][i]['notes_title']}",
-                          content:
-                              "${snapshot.data['data'][i]['notes_contant']}",
+                          notesModel: Data.fromJson(snapshot.data['data'][i]),
                         );
                       },
                     );

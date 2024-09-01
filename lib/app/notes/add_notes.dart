@@ -45,7 +45,9 @@ class _AddNotesScreenState extends State<AddNotesScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.blue,
           title: const Text("Add Notes"),
+          centerTitle: true,
         ),
         body: isLoading == true
             ? const Center(
@@ -74,6 +76,15 @@ class _AddNotesScreenState extends State<AddNotesScreen> {
                       Container(
                         padding: const EdgeInsets.all(20),
                         child: MaterialButton(
+                          onPressed: () {},
+                          color: Colors.blue,
+                          textColor: Colors.white,
+                          child: const Text("choose Image"),
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(20),
+                        child: MaterialButton(
                           onPressed: () async {
                             await addNotes();
                           },
@@ -81,7 +92,7 @@ class _AddNotesScreenState extends State<AddNotesScreen> {
                           textColor: Colors.white,
                           child: const Text("Add Notes"),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
