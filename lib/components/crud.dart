@@ -1,8 +1,9 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
 
 class Crud {
   getRequest(String url) async {
@@ -32,6 +33,30 @@ class Crud {
       }
     } catch (e) {
       print("Error Catch $e");
+    }
+  }
+
+  postRequestWithFile(String url, Map data, File myfile) async {
+    var request = http.MultipartRequest("POST", Uri.parse(url));
+    var length = await myfile.length();
+    var stream = http.ByteStream(myfile.openRead());
+    var multipartfile = http.MultipartFile(
+      "notes_image",
+      stream,
+      length,
+      filename: basename(myfile.path),
+    );
+    request.files.add(multipartfile);
+    data.forEach((key, value) {
+      request.fields[key] = value;
+    });
+    var myrequest = await request.send();
+    var response = await http.Response.fromStream(myrequest);
+
+    if (myrequest.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      print("Error ${myrequest.statusCode}");
     }
   }
 }

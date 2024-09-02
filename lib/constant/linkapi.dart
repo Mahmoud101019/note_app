@@ -1,4 +1,5 @@
 const String linkServerName = 'http://192.168.43.198/coursephp';
+const String linkImageName = 'http://192.168.43.198/coursephp/upload';
 
 //Auth Links
 

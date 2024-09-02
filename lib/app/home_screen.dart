@@ -29,10 +29,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return respone;
   }
 
-  deleteNote(String notesId) async {
+  deleteNote(String notesId, String imagename) async {
     var response = await crud.postRequest(
       linkDeleteNote,
-      {"notes_id": notesId},
+      {
+        "notes_id": notesId,
+        "notes_image": imagename,
+      },
     );
     if (response['status'] == "Success") {
       Navigator.of(context).pushNamedAndRemoveUntil("Home", (route) => false);
@@ -92,8 +95,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemBuilder: (context, i) {
                         return CardNote(
                           onDelete: () async {
-                            deleteNote(snapshot.data['data'][i]['notes_id']
-                                .toString());
+                            deleteNote(
+                              snapshot.data['data'][i]['notes_id'].toString(),
+                              snapshot.data['data'][i]['notes_image']
+                                  .toString(),
+                            );
                           },
                           onTap: () {
                             Navigator.of(context).push(
