@@ -1,5 +1,5 @@
-const String linkServerName = 'http://192.168.43.198/coursephp';
-const String linkImageName = 'http://192.168.43.198/coursephp/upload';
+const String linkServerName = 'http://192.168.8.66/coursephp';
+const String linkImageName = 'http://192.168.8.66/coursephp/upload';
 
 //Auth Links
 
